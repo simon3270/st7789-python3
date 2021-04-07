@@ -25,7 +25,7 @@ Usage: {} <display_type>
 Where <display_type> is one of:
 
   * square - 240x240 1.3" Square LCD
-  * round  - 240x240 1.3" Round LCD (applies an offset)
+  * round  - 240x240 1.3" Round LCD (default)
 """.format(sys.argv[0]))
 
 try:
@@ -76,15 +76,17 @@ SECOND_WIDTH = 1
 
 
 while True:
-    #x = (time.time() - t_start) * 100
-    #x %= (size_x + disp.width)
+    # Clear out image
     draw.rectangle((0, 0, 240, 240), fill=(0, 0, 0, 0))
+    # Draw the numbers round the edge
     for ii in range(12):
         draw.text(nums[ii], "%d" % (ii+1), font=font, fill=(255, 255, 255))
+    # Get the current time, and work out the hand direction
     t_now = time.localtime()
     h_dirn = (t_now.tm_hour+t_now.tm_min/60.0)*2*math.pi/12.0
     m_dirn = (t_now.tm_min/60.0)*2*math.pi
     s_dirn = (t_now.tm_sec/60.0)*2*math.pi
+    # Draw the hands as lines of verying widths
     draw.line((MID_X, MID_Y, 
                MID_X+HOUR_RADIUS*math.sin(h_dirn),
                MID_Y-HOUR_RADIUS*math.cos(h_dirn)),
@@ -99,15 +101,15 @@ while True:
               (255,0,0), width=SECOND_WIDTH)
     draw.ellipse((MID_X-5, MID_Y-5, MID_X+5, MID_Y+5),
             outline=(0, 255, 0), fill=(0, 0, 255))
+    # Display the time digitally too
     time_str = "%2d:%02d:%02d" % \
             (t_now.tm_hour, t_now.tm_min, t_now.tm_sec)
     size_x, size_y = draw.textsize(time_str, font)
     draw.text((MID_X-size_x/2, MID_Y+30), time_str,
             font=font, fill=(128, 128, 128))
-    #draw.rectangle((MID_X-HOUR_WIDTH*math.cos(h_dirn-math.pi/2),
-    #                MID_Y+HOUR_WIDTH*math.sin(h_dirn-math.pi/2),
-    #                MID_X+HOUR_RADIUS*math.sin(h_dirn)-HOUR_WIDTH*math.cos(h_dirn+math.pi/2),
-    #                MID_Y+HOUR_RADIUS*math.cos(h_dirn)+HOUR_WIDTH*math.sin(h_dirn+math.pi/2)),
-    #               (0, 255, 0))
-    #draw.text((int(text_x - x), text_y), MESSAGE, font=font, fill=(255, 255, 255))
+    # Refresh the display
     disp.display(img)
+
+    # Pause a moment - don't wait for the whole second, otherwise
+    # the display gets too jumpy (the above code takes time to run)
+    time.sleep(0.1)
