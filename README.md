@@ -3,7 +3,7 @@ Example ST7789 display code in Python3
 
 ## Watch face - watchface.py
 
-This is an analogue watch, particularly aimed at the Pimoroni 1.3" SPI Colour Round LCD (240x240) Breakout (https://shop.pimoroni.com/products/1-3-spi-colour-round-lcd-240x240-breakout), though it should work on many SPI st7789 displays (or, with some tweaks, I2C ones).
+This is an analogue watch, particularly aimed at the [Pimoroni 1.3" SPI Colour Round LCD (240x240) Breakout](https://shop.pimoroni.com/products/1-3-spi-colour-round-lcd-240x240-breakout), though it should work on many SPI st7789 displays (or, with some tweaks, I2C ones).
 
 The code is executable. Usage:
 
