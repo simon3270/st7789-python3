@@ -9,4 +9,4 @@ The code is executable. Usage:
 
     ./watchface.py [round|square]
 
-The only parameter is whether the display is round (default) or square. It has been tested on the Pimoroni 240 by 240 round display.
+The only parameter is whether the display is round (default) or square. It was developed for the Pimoroni 240 by 240 round display, but has also been tested on the [square one](https://shop.pimoroni.com/products/1-3-spi-colour-lcd-240x240-breakout).
