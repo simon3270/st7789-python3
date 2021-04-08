@@ -10,3 +10,5 @@ The code is executable. Usage:
     ./watchface.py [round|square]
 
 The only parameter is whether the display is round (default) or square. It was developed for the Pimoroni 240 by 240 round display, but has also been tested on the [square one](https://shop.pimoroni.com/products/1-3-spi-colour-lcd-240x240-breakout).
+
+**NOTE**: There's a bug in one of the underlying C code libraries, so a "free()" fails after some time and crashes Python3. If you want to use this as a clock display, run watchface.py in a forever loop.
