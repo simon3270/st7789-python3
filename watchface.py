@@ -93,22 +93,29 @@ for ii in range(12):
                           int(MID_X+FULL_RADIUS*math.sin(ii*2*math.pi/12.0)),
                           int(MID_Y+FULL_RADIUS*math.cos(ii*2*math.pi/12.0))))
 
+size_x, size_y = draw.textsize("11:22:33", font)
+
 
 while True:
     # Clear out image
     draw.rectangle((0, 0, 240, 240), fill=(0, 0, 0, 0))
-    # Draw the numbers round the edge
+
+    # Draw the numbers and ticks round the edge
     for ii in range(12):
         draw.text(nums_pos[ii], "%d" % (ii+1), font=font, fill=(255, 255, 255))
         draw.line(fivetick_ends[ii], (192, 192, 192), width=TICK_5_WIDTH)
     for ii in range(60):
         if ii % 5 != 0:
             draw.line(onetick_ends[ii], (192, 192, 192), width=TICK_1_WIDTH)
-    # Get the current time, and work out the hand direction
+
+    # Get the current time, and work out the hand direction and time string
     t_now = time.localtime()
     h_dirn = (t_now.tm_hour+t_now.tm_min/60.0)*2*math.pi/12.0
     m_dirn = (t_now.tm_min+t_now.tm_sec/60.0)*2*math.pi/60.0
     s_dirn = (t_now.tm_sec)*2*math.pi/60.0
+    time_str = "%2d:%02d:%02d" % (t_now.tm_hour, t_now.tm_min, t_now.tm_sec)
+    t_now = None
+
     # Draw the hands as lines of verying widths
     draw.line((MID_X, MID_Y,
                MID_X+HOUR_RADIUS*math.sin(h_dirn),
@@ -125,14 +132,14 @@ while True:
     draw.ellipse((MID_X-5, MID_Y-5, MID_X+5, MID_Y+5),
                  outline=(0, 255, 0), fill=(0, 0, 255))
     # Display the time digitally too
-    time_str = "%2d:%02d:%02d" % \
-        (t_now.tm_hour, t_now.tm_min, t_now.tm_sec)
-    size_x, size_y = draw.textsize(time_str, font)
+    # size_x, size_y = draw.textsize(time_str, font)
     draw.text((MID_X-size_x/2, MID_Y+30), time_str,
               font=font, fill=(128, 128, 128))
+    time_str = None
+
     # Refresh the display
     disp.display(img)
 
     # Pause a moment - don't wait for the whole second, otherwise
     # the display gets too jumpy (the above code takes time to run)
-    time.sleep(0.1)
+    time.sleep(0.01)
